@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Router)
 
+const routerOptions = [
+  { path: '/', component: 'LandingPage' },
+  { path: '/map', component: 'MapPage'}
+]
+
+const routes = routerOptions.map(route => {
+  return {
+    path: route.path,
+    component: () => import(`@/components/${route.component}.vue`)
+  }
+})
+
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
+  mode: 'history',
+  routes
 })
