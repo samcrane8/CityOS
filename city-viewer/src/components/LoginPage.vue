@@ -12,24 +12,44 @@
                 </v-flex>
               </v-flex>
             </v-layout>
-            <v-layout column style="float:right;margin-top:8%;">
+            <v-layout column style="float:right;margin-top:4%;">
               <v-flex ma-1>
                 <v-card style="background-color:#ffffff;opacity:0.95">
                   <form @submit.prevent="userLogin"  @success="onLogin">
                     <v-card-title>
-                      <v-flex class="text-xs-center" style="margin-top:5%;">
-                        <h2> Get Started </h2>
+                      <v-flex class="text-xs-left" style="margin-top:0px;">
+                        <h2> Login </h2>
                       </v-flex>
                     </v-card-title>
                     <v-card-text>
                       <v-layout column>
+                        <v-flex>
+                          <v-text-field
+                            name="loginEmail"
+                            label="Email"
+                            id="loginEmail"
+                            type="username"
+                            v-model="loginEmail"
+                            required></v-text-field>
+                        </v-flex>
+                        <v-flex>
+                          <v-text-field
+                            name="loginPassword"
+                            label="Password"
+                            id="loginPassword"
+                            type="password"
+                            v-model="loginPassword"
+                            required></v-text-field>
+                        </v-flex>
+                        <v-flex id="warning" class="text-xs-center" style="visibility:hidden;color:#ff0000;">
+                          <p> Member does not exist </p>
+                        </v-flex>
                         <v-flex class="text-xs-center">
-                          <v-btn style="background-color:primary;color:primary"
+                          <v-btn v-on:click="userLogin" style="background-color:primary;color:primary"
                           flat
                           outline
-                          to="/login"
                           >
-                            Enter
+                            Login
                           </v-btn>
                         </v-flex>
                       </v-layout>

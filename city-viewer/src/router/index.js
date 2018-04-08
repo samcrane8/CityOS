@@ -6,6 +6,7 @@ Vue.use(Router)
 
 const routerOptions = [
   { path: '/', component: 'LandingPage' },
+  { path: '/login', component: 'LoginPage' },
   { path: '/map', component: 'MapPage'}
 ]
 
