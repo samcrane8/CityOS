@@ -5,7 +5,7 @@
         <v-container>
           <!-- First Row on the Main Login Page with SignUp & Login Dialogs -->
           <v-layout row wrap style="margin-top:10%;">
-            <v-layout column style="margin-top:15%;">
+            <v-layout column style="margin-top:12%;">
               <v-flex mt-3>
                 <v-flex class="text-xs-center">
                   <span style="font-size:30px;color:#dadfe8;">One portal city management.</span><br/>
@@ -110,18 +110,7 @@ export default {
     }
   },
   mounted() {
-    this.isLoggedIn(
-      response => {
-        if (response.data == 'True') {
-          this.$emit('change-toolbar-color', 'primary')
-          router.push('/homepage')
-        } else {
-          this.$emit('change-toolbar-color', 'transparent')
-        }
-      },
-      error => {
-        alert('Hmmm something went wrong with our servers when fetching stations!! Sorry!')
-      })
+
   }
 }
 </script>

@@ -11,7 +11,7 @@ Vue.use(VueAxios, axios)
 export default {
   data () {
   	return {
-  		base_url: 'http://34.201.221.7:5000'
+  		base_url: 'http://52.91.245.234:5000'
       //base_url: 'http://localhost:5000'
   	}
   },
@@ -23,12 +23,6 @@ export default {
         .then(success)
         .catch(failure);
     },
-    is_government_official(success, failure) {
-      var url = this.base_url + '/v1_0/is_government_official'
-      axios.get(url, {withCredentials:true})
-        .then(success)
-        .catch(failure);
-      },
     login(email, password, success, failure) {
     	var body = {'email': email, 'password': password}
       var url = this.base_url + '/v1_0/login'
@@ -38,12 +32,6 @@ export default {
     },
     logoff(success, failure) {
     	var url = this.base_url + '/v1_0/logoff'
-      axios.get(url, {withCredentials:true})
-        .then(success)
-        .catch(failure);
-    },
-    logoff_v1_1(success, failure) {
-      var url = this.base_url + '/v1_1/logoff'
       axios.get(url, {withCredentials:true})
         .then(success)
         .catch(failure);
@@ -74,15 +62,15 @@ export default {
         .catch(failure);
     },
 
-    //DRONE API CALLS
-    get_user_drones(success, failure){
-      var url = this.base_url + '/v1_1/get_user_drones'
+    //DEVICE API CALLS
+    get_user_devices(success, failure){
+      var url = this.base_url + '/v1_0/get_user_devices'
       axios.get(url, {withCredentials:true})
         .then(success)
         .catch(failure);
     },
-    register_drone(description, success, failure) {
-      var url = this.base_url + '/v1_0/register_drone'
+    register_device(description, success, failure) {
+      var url = this.base_url + '/v1_0/register_device'
       var body = {'description': description}
       axios.post(url,body, {withCredentials:true})
         .then(success)

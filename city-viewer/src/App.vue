@@ -1,20 +1,38 @@
 <template>
   <div id="app">
-    <v-toolbar flat fixed style="background-color:#FFFFFF">
+    <v-toolbar flat fixed color="transparent" :style="toolbar_text">
       <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer;color: #194769;font-size:30px;">
+        <router-link v-if="!logged_in" to="/" tag="span" style="cursor:pointer;font-size:30px;color:white;">
+          CityOS
+        </router-link>
+        <router-link v-if="logged_in" to="/map" tag="span" style="cursor: pointer;font-size:30px;color:black;">
           CityOS
         </router-link>
       </v-toolbar-title>
       <v-spacer/>
       <v-toolbar-items v-if="!logged_in" class="hidden-sm-and-down">
-        <v-btn style="color:#194769;" flat to="/login" >LOGIN</v-btn>
+        <v-btn flat to="/login" :style="toolbar_text">LOGIN</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-if="logged_in" class="hidden-sm-and-down">
-        <v-btn style="color:#194769;" flat to="/map" >MAP</v-btn>
+        <v-btn flat @click="_logoff" :style="toolbar_text">LOGOFF</v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <router-view absolute v-on:snackbar="_snackbar" v-on:change-toolbar-color="change_toolbar_color"/>
+    <router-view absolute v-on:snackbar="_snackbar" v-on:change-toolbar-color="change_toolbar_color" v-on:login="login"/>
+    <v-snackbar
+      :timeout="timeout"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar"
+      color="white"
+    >
+      <v-flex class="text-xs-center">
+        <span style="color:black"> {{ text }} </span>
+      </v-flex>
+    </v-snackbar>
   </div>
 </template>
 
@@ -41,7 +59,9 @@ export default {
   name: 'CityOS',
   data () {
     return {
+      items: [{title:'guy'}],
       toolbar_color: "transparent",
+      toolbar_text: "color:white",
       sidebar: false,
       logged_in: false,
       snackbar: false,
@@ -84,29 +104,31 @@ export default {
       this.logoff(response => {
         this.logged_in = false
         this.menuItems = this.notLoggedIn
+        this._snackbar(2000,'Logged off.')
         router.push('/')
       },
       error => {
         alert('Hmmm something went wrong with our servers when fetching stations!! Sorry!')
       })
-    },
-    mounted() {
-      this.isLoggedIn(
-        response => {
-          if (response.data == 'True') {
-            this.logged_in = true
-            this.menuItems = this.userMenu
-            this.toolbar_color = 'primary'
-          } else {
-            this.logged_in = false
-            this.menuItems = this.notLoggedIn
-            this.toolbar_color = 'transparent'
-          }
-        },
-        error => {
-          alert('Hmmm something went wrong with our servers when fetching stations!! Sorry!')
-        })
     }
+  },  
+  mounted() {
+    this.isLoggedIn(
+      response => {
+        if (response.data == 'True') {
+          this.logged_in = true
+          this.menuItems = this.userMenu
+          this.toolbar_color = 'black'
+        } else {
+          this.logged_in = false
+          this.menuItems = this.notLoggedIn
+          this.toolbar_color = 'transparent'
+          router.push('/')
+        }
+      },
+      error => {
+        alert('Hmmm something went wrong with our servers when fetching stations!! Sorry!')
+      })
   }
 }
 </script>
@@ -116,8 +138,7 @@ export default {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
     height:100px;
-    background-color: #F6F6E9;
+    background-color: white;
   }
 </style>

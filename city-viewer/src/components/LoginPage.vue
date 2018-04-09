@@ -106,14 +106,15 @@ export default {
     userLogin() {
       this.login(this.loginEmail, this.loginPassword,
         response => {
-          if (response.data['code'] == 200) {
+          if (response.status == 200) {
             this.loginDialog = true;
             this.signUpDialog = false;
             this.$emit('change-toolbar-color', 'primary')
             this.$emit('login')
-            router.push('/homepage')
-          } else if (response.data['code'] == 31) {
-            throw error
+            this.$emit('snackbar',2000, 'Logged In.')
+            router.push('/map')
+          } else if (response.status == 400) {
+            this.$emit('snackbar',2000, 'Bad Login.')
           }
         },
         error => {
@@ -121,7 +122,7 @@ export default {
         })
     },
     onLogin() {
-      router.push('/homepage')
+      router.push('/map')
     }
   },
   computed: {
@@ -130,18 +131,7 @@ export default {
     }
   },
   mounted() {
-    this.isLoggedIn(
-      response => {
-        if (response.data == 'True') {
-          this.$emit('change-toolbar-color', 'primary')
-          router.push('/homepage')
-        } else {
-          this.$emit('change-toolbar-color', 'transparent')
-        }
-      },
-      error => {
-        alert('Hmmm something went wrong with our servers when fetching stations!! Sorry!')
-      })
+    
   }
 }
 </script>
