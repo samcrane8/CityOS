@@ -37,8 +37,6 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
-        <video ref="videoRef" src="http://52.91.28.88:8080/hls/live.m3u8" id="video-container" type="application/x-mpegURL" width="100%" controls class="video-js">
-        </video>
       </v-card-text>
     </v-card>
     <v-flex>

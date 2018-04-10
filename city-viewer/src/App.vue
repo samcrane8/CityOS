@@ -119,6 +119,7 @@ export default {
           this.logged_in = true
           this.menuItems = this.userMenu
           this.toolbar_color = 'black'
+          router.push('/map')
         } else {
           this.logged_in = false
           this.menuItems = this.notLoggedIn
